@@ -26,7 +26,6 @@ namespace LanghamHotel
                     Console.WriteLine("LANGHAM HOTEL MANAGEMENT SYSTEM \n                MENU");
                     Console.WriteLine("************************************************");
                     Console.WriteLine(" \t\n 1. Add Rooms " + "\t\n 2. Display Rooms " + "\t\n 3. Allocate Rooms " +
-                                      "\t\n 4. DeAllocate Rooms " + "" + "\t\n 5. Display Room Allocation Details" +
                                       "\t\n 6. Billing" + "\t\n 7. Save the Room Allocation to a File" +
                                       "\t\n 8. Show the Room Allocation from File" + "\t\n 9. Exit");
                     Console.WriteLine("*************************************************");
@@ -160,7 +159,6 @@ namespace LanghamHotel
                    Console.Write("Enter s/d/f to check  which type rooms(single/double/family) want to allocate in hotel : ");
                    var result=Console.ReadLine();
                    var searchResults = Rooms.Where(n => n.roomName.Contains(result)).ToList();
-                if (searchResults.Count == 0)
                 {
                     Console.WriteLine("No Results Were Found");
                 }
@@ -173,64 +171,30 @@ namespace LanghamHotel
                 {                     
                     Console.WriteLine("Available  your choosen   rooms : "+"Room Id - "+arooms.roomId + " Room type - " + arooms.roomName);
                 }
-                    Console.Write("How many room need to be allocated: ");
-                    int num = Convert.ToInt32(Console.ReadLine());
-                    for (int i = 1; i <= num; i++)
-                    {
-                        Console.Write("Enter Room Id : ");
-                        var result1 = Convert.ToInt32(Console.ReadLine());
-                        //Console.Write("Enter Room type (single/double/family ) ");
-                        //var result2 = Console.ReadLine();
-                        Console.Write("Enter Customer name : ");
-                        var result3 = Console.ReadLine();
-                        Console.Write("Enter an index of allocate room ID: ");
-                        var index = Convert.ToInt32(Console.ReadLine());
-                        index--;
-
+                    var index = Convert.ToInt32(Console.ReadLine());
+                    index--;
+                    
                         HotelRooms Customer = new HotelRooms(result1, result, result3);
                         CustomerName.Add(Customer);
-                        Rooms.RemoveAt(index);
+                    Rooms.RemoveAt(index);
                         Console.WriteLine("Room allocated to  " + result3);
-
-
-                    }
+              
+                    Console.WriteLine("Room has been allocated to "+name+"\n Thank you ,Come back again !\n ");
+                    
+                  
+                }
 
 
 
            }
                   // method deallocaterooms
            public void DeAllocateRooms()
-            {
-                    Console.Write("How many room need to be allocated: ");
-                    int num = Convert.ToInt32(Console.ReadLine());
-                for (int i = 1; i <= num; i++)
-                {
-                    Console.Write("Enter customer name  which  rooms want to deallocate in hotel ");
-                    var result = Console.ReadLine();
-                    var searchResults = CustomerName.Where(n => n.name.Contains(result)).ToList();
-                    if (searchResults.Count == 0)
-                    {
-                        Console.WriteLine("No Results Were Found");
-                    }
-                    else
-
-                    {
-                        Console.WriteLine("The Following Results Were Found: \n");
-
-                    foreach (HotelRooms arooms in searchResults)
-                    {
-                            Console.WriteLine("Available  your choosen   rooms : " + "Room Id - " + arooms.roomId + " Room type - " + arooms.roomName + " Customer name " + arooms.name);
-                    }
-                        Console.Write("Enter Room Id you want to deallocate : ");
-                        var result1 = Convert.ToInt32(Console.ReadLine());
-
-                        Console.Write("Enter an index of deallocate room ID: ");
-                        var index = Convert.ToInt32(Console.ReadLine());
-                        index++;
-
-                        Console.WriteLine("Room deallocated : \troom id : " + result1 + " Customer name: " + result);
-                    }
-                }
+           {
+                  var result = Console.ReadLine();
+                  Console.Write("Enter an index of deallocate room ID: ");
+                  var index = Convert.ToInt32(Console.ReadLine());
+                  index++;
+            
                
            }
                    //method displayroomallocation
@@ -239,13 +203,12 @@ namespace LanghamHotel
                foreach (HotelRooms cus in CustomerName)
                {
                     Console.WriteLine("Allocated Rooms : \t" + " Room Id -  " + cus.roomId + " Room Type - " + cus.roomName + " Customer name " + cus.name);
-                   
+
                }
                     Console.WriteLine("\n");
-                foreach (HotelRooms newroom in Rooms)
+               foreach (HotelRooms newroom in Rooms)
                {
 
-                   Console.WriteLine("Available Rooms after allocation : " + " Room Id - " + newroom.roomId + " \tRoom Type - " + newroom.roomName);
                     
                }
 
@@ -268,10 +231,8 @@ namespace LanghamHotel
                     using (StreamWriter sw = File.CreateText(filepath))
                     {
 
-                        foreach (HotelRooms cus in CustomerName)
                         {
 
-                            sw.WriteLine("Allocated Rooms : " +"Customer name - "+cus.name+ " Room Id - " + cus.roomId + " \tRoom Type - " + cus.roomName);
 
                         }
                             sw.Write(sDateTime);
@@ -280,7 +241,7 @@ namespace LanghamHotel
                             sw.Close();
 
                 //    }
-                            
+
                             Console.WriteLine("Data saved in lhms_studentid.txt !!");
 
                // } else
@@ -299,13 +260,11 @@ namespace LanghamHotel
 
                 string filepath = Path.Combine(folderPath, "lhms_studentid.txt");
 
-                
                 string path1 = @"C:\Users\makum\OneDrive\Pictures\lhms_studentid.txt";
                 string All_text = File.ReadAllText(path1);
                 Console.WriteLine(All_text);
            
                 string src = @"C:\Users\makum\OneDrive\Pictures\lhms_studentid.txt";
-                string dest = @"C:\Users\makum\OneDrive\Pictures\lhms_studentid_Backup.txt";
                 File.Copy(src,dest);
                 Console.WriteLine("File has been backup");
 
